@@ -49,22 +49,47 @@ cardinals_verbose = {
 cardinal_directions = 'nesw'
 
 
+def init_player():
+    print("Welcome to the game.")
+    name = None
+
+    while not name:
+        name = input("\nWhat is your name? ")
+
+    print(f"\nHello {name}!")
+    return Player(name, room['outside'])
+
+
+def print_location(current_room):
+    print(f"\nYour present location is {current_room.name}.")
+    print(f"{current_room.description}")
+
+
+def prompt_direction():
+    return input(
+        "\nWhich direction do you choose? ['N', 'E', 'S', 'W' or 'Q' to quit] ").lower()
+
+
 def print_impossible_move(cardinal, room_name):
     print(f"\nCannot move {cardinals_verbose[cardinal]} from {room_name}.")
 
 
-print("Welcome to the game.")
-name = input("\nWhat is your name? ")
-print(f"\nHello {name}!")
-player = Player(name, room['outside'])
+def print_invalid_choice(choice):
+    print(f'\nWhoa now... "{choice}" is not a valid choice.')
+
+
+def end_game():
+    print("\nGoodbye for now!")
+    exit()
+
+
+player = init_player()
 
 while(True):
 
-    print(f"\nYour present location is {player.current_room.name}.")
-    print(f"{player.current_room.description}")
+    print_location(player.current_room)
 
-    choice = input(
-        "\nWhich direction do you choose? ['N', 'E', 'S', 'W' or 'Q' to quit] ").lower()
+    choice = prompt_direction()
 
     if not choice:
         continue
@@ -80,5 +105,7 @@ while(True):
         continue
 
     elif choice == 'q':
-        print("\nGoodbye for now!")
-        exit()
+        end_game()
+
+    else:
+        print_invalid_choice(choice)

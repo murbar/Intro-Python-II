@@ -38,48 +38,47 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
-# Make a new player object that is currently in the 'outside' room.
 
-cardinalsVerbose = {
+cardinals_verbose = {
     "n": "North",
     "e": "East",
     "s": "South",
     "w": "West"
 }
 
-
-def printImposibleMove(cardinal, room_name):
-    print(f"\nCannot move {cardinalsVerbose[cardinal]} from {room_name}.\n")
+cardinal_directions = 'nesw'
 
 
-print("Welcome to the game.\n")
-name = input("What is your name? ")
-print(f"\nHello {name}!\n")
+def print_impossible_move(cardinal, room_name):
+    print(f"\nCannot move {cardinals_verbose[cardinal]} from {room_name}.")
+
+
+print("Welcome to the game.")
+name = input("\nWhat is your name? ")
+print(f"\nHello {name}!")
 player = Player(name, room['outside'])
 
-# Write a loop that:
 while(True):
-    # Prints the current room name
-    # Prints the current description (the textwrap module might be useful here).
-    print(f"Your present location is {player.current_room.name}.\n")
-    print(f"{player.current_room.description}\n")
-    # Waits for user input and decides what to do.
-    choice = input(
-        "Which direction do you choose? ['N', 'E', 'S', 'W' or 'Q' to quit] ").lower()
 
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    if choice == 'n':
-        next_room = player.current_room.n_to
+    print(f"\nYour present location is {player.current_room.name}.")
+    print(f"{player.current_room.description}")
+
+    choice = input(
+        "\nWhich direction do you choose? ['N', 'E', 'S', 'W' or 'Q' to quit] ").lower()
+
+    if not choice:
+        continue
+
+    if choice in cardinal_directions:
+        next_room = getattr(player.current_room, f"{choice}_to", None)
 
         if not next_room:
-            # Print an error message if the movement isn't allowed.
-            printImposibleMove(choice, player.current_room.name)
+            print_impossible_move(choice, player.current_room.name)
         else:
             player.current_room = next_room
 
         continue
 
-    # If the user enters "q", quit the game.
     elif choice == 'q':
         print("\nGoodbye for now!")
         exit()

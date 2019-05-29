@@ -109,3 +109,6 @@ while(True):
 
     else:
         print_invalid_choice(choice)
+
+
+# "?" to show options

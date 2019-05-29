@@ -102,8 +102,6 @@ while(True):
         else:
             player.current_room = next_room
 
-        continue
-
     elif choice == 'q':
         end_game()
 

@@ -46,7 +46,7 @@ cardinals_verbose = {
     "w": "West"
 }
 
-cardinal_directions = 'nesw'
+cardinal_directions = ['n', 'e', 's', 'w']
 
 
 def init_player():
@@ -61,7 +61,7 @@ def init_player():
 
 
 def print_location(current_room):
-    print(f"\nYour present location is {current_room.name}.")
+    print(f"\nYour current location is {current_room.name}.")
     print(f"{current_room.description}")
 
 

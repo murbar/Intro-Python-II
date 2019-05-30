@@ -32,7 +32,7 @@ def print_location(current_room):
 
 def prompt_action():
     return input(
-        "\nWhat now?").lower()
+        "\nWhat now? ").lower()
 
 
 def print_impossible_move(cardinal, room_name):
@@ -42,13 +42,16 @@ def print_impossible_move(cardinal, room_name):
 def print_help():
     print(
         "\nAvailable actions:",
-        "\n'N', 'E', 'S', 'W' to move"
-        "\n'H' for help"
+        "\n'n', 'e', 's', 'w' to move"
+        "\n'get [item]' to add an item to your inventory"
+        "\n'drop [item]' to leave an item behind"
+        "\n'h' for help"
     )
 
 
-def print_invalid_action(choice):
-    print(f'\nWhoa now... "{choice}" is not a valid choice.')
+def print_invalid_action(action):
+    print(f'''\nHmm... can't seem to "{action}".''')
+    print_help()
 
 
 def end_game():
@@ -83,6 +86,3 @@ while(True):
 
     else:
         print_invalid_action(action)
-
-
-# "?" to show options

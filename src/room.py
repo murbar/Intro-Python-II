@@ -11,3 +11,19 @@ class Room:
         self.e_to = None
         self.s_to = None
         self.w_to = None
+
+    def find_item(self, item_name):
+        # get the first item with name == item_name or None
+        item = next(
+            (i for i in self.items if i.name.lower() == item_name), None)
+
+        if not item:
+            print(f"No '{item_name}' in this room.")
+
+        return item
+
+    def add_item(self, item):
+        self.items.append(item)
+
+    def remove_item(self, item):
+        self.items.remove(item)

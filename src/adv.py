@@ -47,6 +47,8 @@ def print_help():
     print(
         "\nAvailable actions:",
         "\n'n', 'e', 's', 'w' to move"
+        "\n'i' to list your inventory"
+        "\n'look [item]' to inspect an item"
         "\n'get [item]' to add an item to your inventory"
         "\n'drop [item]' to leave an item behind"
         "\n'h' for help"
@@ -55,6 +57,11 @@ def print_help():
 
 def print_invalid_action(action):
     print(f'''\nHmm... can't seem to "{action}".''')
+    print_help()
+
+
+def print_no_item():
+    print(f'\nYou must specify an item.')
     print_help()
 
 
@@ -81,6 +88,25 @@ while(True):
             print_impossible_move(action, player.current_room.name)
         else:
             player.current_room = next_room
+
+    elif action in ['get', 'drop', 'look']:
+        if not target:
+            print_no_item()
+
+        item = player.current_room.find_item(target)
+
+        if item:
+            if action == 'look':
+                item.inspect()
+
+            if action == 'get':
+                player.add_inventory_item(item.name)
+
+            if action == 'drop':
+                player.remove_inventory_item(item.name)
+
+    elif action == 'i':
+        player.print_inventory()
 
     elif action == 'h':
         print_help()

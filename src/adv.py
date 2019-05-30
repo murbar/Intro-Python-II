@@ -19,21 +19,28 @@ def init_player():
         name = input("\nWhat is your name? ")
 
     print(f"\nHello {name}!")
-    return Player(name, room['outside'])
+    return Player(name, rooms['outside'])
 
 
 def print_location(current_room):
     print(f"\nYour current location is {current_room.name}.")
     print(f"{current_room.description}")
+    if current_room.items:
+        print(
+            f"\nHere you see: {', '.join([i.name for i in current_room.items])}")
 
 
-def prompt_direction():
+def prompt_action():
     return input(
-        "\nWhich direction do you choose? ['N', 'E', 'S', 'W' or 'Q' to quit] ").lower()
+        "\nWhat now? ['H' for help] ").lower()
 
 
 def print_impossible_move(cardinal, room_name):
     print(f"\nCannot move {cardinals_verbose[cardinal]} from {room_name}.")
+
+
+def print_help():
+    print("\nAvailable actions:", "\n'N', 'E', 'S', 'W' to move")
 
 
 def print_invalid_choice(choice):
@@ -51,7 +58,7 @@ while(True):
 
     print_location(player.current_room)
 
-    choice = prompt_direction()
+    choice = prompt_action()
 
     if not choice:
         continue
@@ -63,6 +70,9 @@ while(True):
             print_impossible_move(choice, player.current_room.name)
         else:
             player.current_room = next_room
+
+    elif choice == 'h':
+        print_help()
 
     elif choice == 'q':
         end_game()

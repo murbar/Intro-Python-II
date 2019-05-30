@@ -31,8 +31,12 @@ def print_location(current_room):
 
 
 def prompt_action():
-    return input(
-        "\nWhat now? ").lower()
+    command = input(
+        "\nWhat now? ").lower().split(" ")
+    if len(command) == 2:
+        return command[0], command[1]
+
+    return command[0], None
 
 
 def print_impossible_move(cardinal, room_name):
@@ -65,7 +69,7 @@ while(True):
 
     print_location(player.current_room)
 
-    action = prompt_action()
+    action, target = prompt_action()
 
     if not action:
         print_help()

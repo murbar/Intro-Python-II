@@ -32,7 +32,7 @@ def print_location(current_room):
 
 def prompt_action():
     return input(
-        "\nWhat now? ['H' for help] ").lower()
+        "\nWhat now?").lower()
 
 
 def print_impossible_move(cardinal, room_name):
@@ -40,10 +40,14 @@ def print_impossible_move(cardinal, room_name):
 
 
 def print_help():
-    print("\nAvailable actions:", "\n'N', 'E', 'S', 'W' to move")
+    print(
+        "\nAvailable actions:",
+        "\n'N', 'E', 'S', 'W' to move"
+        "\n'H' for help"
+    )
 
 
-def print_invalid_choice(choice):
+def print_invalid_action(choice):
     print(f'\nWhoa now... "{choice}" is not a valid choice.')
 
 
@@ -58,27 +62,27 @@ while(True):
 
     print_location(player.current_room)
 
-    choice = prompt_action()
+    action = prompt_action()
 
-    if not choice:
-        continue
+    if not action:
+        print_help()
 
-    if choice in cardinal_directions:
-        next_room = getattr(player.current_room, f"{choice}_to", None)
+    if action in cardinal_directions:
+        next_room = getattr(player.current_room, f"{action}_to", None)
 
         if not next_room:
-            print_impossible_move(choice, player.current_room.name)
+            print_impossible_move(action, player.current_room.name)
         else:
             player.current_room = next_room
 
-    elif choice == 'h':
+    elif action == 'h':
         print_help()
 
-    elif choice == 'q':
+    elif action == 'q':
         end_game()
 
     else:
-        print_invalid_choice(choice)
+        print_invalid_action(action)
 
 
 # "?" to show options
